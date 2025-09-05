@@ -1,0 +1,20 @@
+[project]
+name = "backend-storyblok-cnc-hackathon"
+version = "0.1.0"
+description = "The backend for our submission to the Storyblok x Code and Coffee Hackathon 2025"
+requires-python = ">=3.13"
+dependencies = [
+    "dotenv>=0.9.9",
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+]
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["foodapi"]
+
+[tool.setuptools.package-dir]
+"foodapi" = "src/foodapi"
