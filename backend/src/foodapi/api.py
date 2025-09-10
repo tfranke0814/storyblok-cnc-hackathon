@@ -1,19 +1,17 @@
 import fastapi
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-import logging
 from dotenv import load_dotenv
 
-# Load environment variables from .env file if it exists
-load_dotenv()  
+# Custom imports
+from .config import get_logger
+from .routes import user_router
 
-# Environment validation and logging setup on startup
-logging.basicConfig(
-    level=logging.DEBUG, # Set to DEBUG for detailed output, change to INFO in production
-    format="%(asctime)s [%(levelname)s] %(message)s"
-)
-logger = logging.getLogger(__name__)
+# Load environment variables and initialize logger
+load_dotenv()
+logger = get_logger(__name__)
 
+# Environment validation on startup
 @asynccontextmanager
 async def lifespan(app: fastapi.FastAPI):
     """"Lifespan context manager for startup and shutdown events."""
@@ -50,10 +48,10 @@ app.add_middleware(
 )
 
 # App routers
-## HERE: Add your API routers
+app.include_router(user_router, prefix="/user", tags=["User"])
 
 @app.get("/", tags=["Root"])
-async def read_root():
+async def root():
     """Root endpoint."""
     return {
         "message": "Welcome to the Food API!",
